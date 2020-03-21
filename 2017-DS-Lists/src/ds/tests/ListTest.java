@@ -182,7 +182,6 @@ public class ListTest extends DSUnitTesting {
 
 	@Test
 	public void testAdd() {
-		
 		Marks.getInstance().marks.put(ID+"Add", 3f);
 		
 		assertTrue("List returned false when trying to add an element.", l.add(new Token(0)));

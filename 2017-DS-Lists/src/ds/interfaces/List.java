@@ -9,7 +9,7 @@ import ds.students.Token;
 public interface List {
 	
 	/**
-	 * Inserts the specified element at the specified position in this list. 
+	 *  Inserts the specified element at the specified position in this list. 
 	 *  Shifts the element currently at that position (if any) and any subsequent 
 	 *  elements to the right (adds one to their indices).
 	 * @param index Index at which to add

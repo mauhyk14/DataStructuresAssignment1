@@ -39,4 +39,9 @@ public class Node {
 			return 0;
 		return t.hashCode();
 	}
+	
+	@Override
+	public String toString() {
+		return t.toString();
+	}
 }
