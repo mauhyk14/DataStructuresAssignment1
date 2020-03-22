@@ -233,11 +233,14 @@ public class ListTest extends DSUnitTesting {
 
 		l = new DSList(chain3);
 		int s = l.size();
+		
+		System.out.println(s); //   only 3 nodes available.
+		
 		assertEquals("List.size() should be working for this test", 3, s);
 		
 		// remember 0 indexing. 
 		Token t = l.get(0);
-		Token n = l.get(4);
+		Token n = l.get(4);  // trying to get the 4th one, should be null.
 		assertNull("List.get() should  return null when the object isn't in the list", n);
 		n = l.get(0);
 		assertEquals("List.get() isn't returning the correct item.", new Token(1), n);

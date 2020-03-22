@@ -43,16 +43,16 @@ public class DSList implements List {
 
 	public Node getNode(int index) 
 	{		
-		// when the index comes in, if it is less than 0 or
+		// when an index comes in, if it is less than 0 or
 		// bigger than the size of the doubly linklist,
 		// the function returns nothing.
 		if(index > this.size() 
-		   && index < 0) 
+		   || index < 0) 
 		{			
 			return null;
 		}
 				
-		// using temp to point to the double linklist
+		// using temp to point to the doubly linklist
 		// head (the head Node).
 		Node temp = this.head;
 		
@@ -74,12 +74,24 @@ public class DSList implements List {
 		// in the doubly linklist. Then, access the token
 		// property.
 		Token returnToken = this.getNode(index).getToken();
-		
+										
 		return returnToken;
 	}
 
 	public boolean isEmpty() {
-		return true;
+		
+		// check the size of the doubly link list.
+		int returnSize = this.size();
+		
+		// if the return size is 0, then it is empty.
+		if(returnSize == 0) 
+		{		
+			return true;		
+		}
+		
+		// any other numbers will be false.
+		return false;
+		
 	}
 
 	
@@ -120,27 +132,30 @@ public class DSList implements List {
 	}
 
 		
-	public boolean add(Token obj) {
-		
-		// check the content the token. if it is null,
-		// we return false.
-		if(obj == null) {
-			
+	public boolean add(Token obj) 
+	{		
+		// check the content of the incoming token,
+		// if it is null, we return false.
+		if(obj == null) 
+		{			
 			return false;
 		}
 		
+		// create a new node
 		Node addTotheEndnode = new Node(null, null, obj);
 		
-		if(this.head == null) {
-			
+		// condition 1: this is the first node coming
+		// to the list.
+		if(this.head == null) 
+		{			
 			this.head = addTotheEndnode;
 			this.tail = addTotheEndnode;
 			return true;
 		}
 			
-		// create a node object
+		// condition 2: adding this new node to the end of 
+		// the list.
 		
-				
 		// add a node to the end of tail;
 		this.tail.next = addTotheEndnode;
 		
@@ -153,52 +168,44 @@ public class DSList implements List {
 		return true;
 	}
 
-	public boolean add(int index, Token obj) {
+	
+	public boolean add(int index, Token obj) 
+	{
 		
 		// if the index outside the list bound and 
 		// token is null, returns false.
-		if(obj == null && 
+		if(obj == null || 
 		   index > this.size()) 
-		{
-			
+		{			
 			return false;
 		}
-		
-		
+				
 		// create a new node object
 		Node newNode = new Node (null, null, obj);
-		
-		
+				
 		// if index not equals to 0
 		// this newly added node is place between 2 nodes.
-		if(index != 0) {
-		
+		if(index != 0) 
+		{		
 			Node temp = this.getNode(index);
 				
 			temp.prev.next = newNode;
-		
-		
+				
 			newNode.prev = temp.prev;
-		
-				
+						
 			newNode.next = temp;
-		
-		
-			temp.prev = newNode;
-					
-		}
-		
-		else {
-			
-											
-			this.head.prev = newNode;
-			
-			
-			newNode.next = this.head;
-								
-		}
-		
 				
+			temp.prev = newNode;					
+		}
+		
+		// place at the beginning of the list.
+		else 
+		{												
+			this.head.prev = newNode;
+						
+			newNode.next = this.head;								
+		}
+						
 		return true;
 	}
 
