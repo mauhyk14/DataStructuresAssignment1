@@ -2,221 +2,366 @@ package ds.students;
 
 import ds.interfaces.List;
 
-
 /**
  * @author simont
  *
  */
 public class DSList implements List {
-	
+
 	public Node head;
 	private Node tail;
-			
-	// when initializing an empty doubly link list,
-	// both the head and tail nodes are empty.
-	public DSList() 
-	{		
+
+	/* a blank constructor takes no parameters */
+	public DSList() {
+
 		this.head = null;
-		this.tail = null;		
+		this.tail = null;
 	}
-	
-	// pointing the current head to the passed in 
-	// Node, set the head to the given Node.
-	// according to the instructions.
-	public DSList(Node head_) 
-	{		
+
+	/* accepting a node and set the head to this given node */
+	public DSList(Node head_) {
+
 		this.head = head_;
 	}
-	
-	public DSList(DSList other) { // Copy constructor. 
-		
+
+	public DSList(DSList other) { // Copy constructor.
+
+						 										
+		  Node temp = other.head;
+		  
+		  
+		  while(temp != null) {
+		  
+		   
+		  // the add method will create the new Node object
+		 //  for the copy doubly-link list. 	  
+		  this.add(temp.getToken());
+		  		  
+		  temp = temp.next;
+		  		  
+		  }
+		 		
 	}
 
+	/* remove a token object from a pass in index */
 	public Token remove(int index) {
-		
-		return null;
-	}
-	
-	public int indexOf(Token obj) {
-		return 0;
+
+		// condition 1: remove the Node at the beginning
+		// of the doubly link list.
+		if (index == 0) {
+
+			Token returnToken = this.head.getToken();
+
+			this.head = this.head.next;
+
+			return returnToken;
+		}
+
+		// condition 2: remove the Node at the end of the doubly
+		// link list.
+		else if (index == this.size() - 1)
+
+		{
+			Token endReturntoken = this.tail.getToken();
+
+			this.tail.prev.next = null;
+
+			// update the this tail variable.
+			this.tail = this.tail.prev;
+
+			return endReturntoken;
+
+		}
+
+		// condition 3: remove the Node in the middle of
+		// the doubly link list.
+		Node temp = this.getNode(index);
+
+		Node preTemp = temp.prev;
+
+		Node postTemp = temp.next;
+
+		preTemp.next = postTemp;
+
+		postTemp.prev = preTemp;
+
+		return temp.getToken();
+
 	}
 
-	public Node getNode(int index) 
-	{		
-		// when an index comes in, if it is less than 0 or
-		// bigger than the size of the doubly linklist,
-		// the function returns nothing.
-		if(index > this.size() 
-		   || index < 0) 
-		{			
+	/* get the index position of the the pass-in Token object */
+	public int indexOf(Token obj) {
+
+		// Initialize the position counter as 0
+		int counter = 0;
+
+		// point the temp as the current head
+		Node temp = this.head;
+
+		// loop through the doubly link list and
+		// compare the token.
+		for (int i = 0; i < this.size(); i++) {
+
+			if (temp.getToken().equals(obj)) {
+
+				return counter;
+			}
+
+			// update the temp variable, point to
+			// the next object.
+			temp = temp.next;
+
+			// increase the counter number
+			counter++;
+		}
+
+		// if no equal token found, returns the -1.
+		return -1;
+	}
+
+	// get the Node object of the pass-in index
+	public Node getNode(int index) {
+
+		// if the index bigger than the size of the
+		// doubly-link list or the index is < 0,
+		// it returns null.
+		if (index > this.size() || index < 0) {
+
 			return null;
 		}
-				
-		// using temp to point to the doubly linklist
-		// head (the head Node).
+
+		// else makes the temp as the head
+		// loop through the Node.
+		// find the Token object and
+		// return that token object.
 		Node temp = this.head;
-		
-		// start from the beginning of the doubly link list
-		// (the head node), loop through the nodes until 
-		// it reach the index position.
-		for(int i = 0; i < index; i++) 
-		{						
-			temp = temp.next;						
+
+		for (int i = 0; i < index; i++) {
+
+			temp = temp.next;
+
 		}
-		
-		return temp;								
-	}
-	
-	
-	public Token get(int index) 
-	{
-		// using the Node getNode method to get the node
-		// in the doubly linklist. Then, access the token
-		// property.
-		Token returnToken = this.getNode(index).getToken();
-										
-		return returnToken;
+
+		return temp;
 	}
 
+	// call the Node getNode method (above),
+	// then get the token.
+	public Token get(int index) {
+
+		Node returnNode = this.getNode(index);
+
+		// if the getNode() method returns null,
+		// return a null result.
+		if (returnNode == null) {
+
+			return null;
+		}
+
+		// else returns the token of that position.
+		return returnNode.getToken();
+	}
+
+	// check the size of the doubly link-list.
+	// if the size() returns 0, we know the list is
+	// empty.
 	public boolean isEmpty() {
-		
-		// check the size of the doubly link list.
-		int returnSize = this.size();
-		
-		// if the return size is 0, then it is empty.
-		if(returnSize == 0) 
-		{		
-			return true;		
+
+		if (this.size() == 0) {
+
+			return true;
+
 		}
-		
-		// any other numbers will be false.
+
 		return false;
-		
+
 	}
 
-	
-	public int size() 
-	{		
-		int countSize = 0;
-		
-		// using a temp variable to point
-		// to the doubly link list head.
+	// count the number of Node in the list.
+	public int size() {
+
+		// point the tempt to the current head
 		Node temp = this.head;
-		
-		// as long as the temp is not null,
-		// we increase the count size and update
-		// the temp.
-		while(temp != null) 
-		{			
-			countSize++;
-			
+
+		// Initialize the counter
+		int counter = 0;
+
+		while (temp != null) {
+
+			counter++;
+
 			temp = temp.next;
 		}
-						
-		return countSize;
+
+		return counter;
 	}
-	
-	
-	
+
 	@Override
 	public String toString() {
+
+		// point the temp to the head Node
 		Node temp = this.head;
-		String result = "";
-		while(temp != null) {
-			
-			result = result + temp.toString() + " ";
+
+		// declare an empty string
+		String resultString = "";
+
+		while (temp != null) {
+
+			resultString = resultString + temp.getToken() + " ";
+
 			temp = temp.next;
+
 		}
-		result = result.substring(0, result.length() - 1);
-		return result;
+
+		// trim and return the result.
+		return resultString.trim();
+
 	}
 
-		
-	public boolean add(Token obj) 
-	{		
-		// check the content of the incoming token,
-		// if it is null, we return false.
-		if(obj == null) 
-		{			
+	// add a token to the end of the doubly-link list.
+	public boolean add(Token obj) {
+
+		if (obj == null) {
+
 			return false;
 		}
-		
-		// create a new node
-		Node addTotheEndnode = new Node(null, null, obj);
-		
-		// condition 1: this is the first node coming
-		// to the list.
-		if(this.head == null) 
-		{			
-			this.head = addTotheEndnode;
-			this.tail = addTotheEndnode;
+
+		// create the node object
+		Node newTailingnode = new Node(null, null, obj);
+
+		// Condition 1: this is the first node adding to the list.
+		// if the head is null, it means this is the first node,
+		// the doubly link list points the head and tail to this
+		// node.
+		if (this.head == null) {
+
+			this.head = newTailingnode;
+			this.tail = newTailingnode;
+
 			return true;
 		}
-			
-		// condition 2: adding this new node to the end of 
-		// the list.
-		
-		// add a node to the end of tail;
-		this.tail.next = addTotheEndnode;
-		
-		// make the new node's previous equals to the tail.
-		addTotheEndnode.prev = this.tail;
-				
-		// update tail to the newly added tail node
-		this.tail = addTotheEndnode;
-		
+
+		// Condition 2: Adding a Node to the end of the
+		// pre-existing doubly link-list.
+
+		this.tail.next = newTailingnode;
+
+		newTailingnode.prev = this.tail;
+
+		this.tail = newTailingnode;
+
 		return true;
 	}
 
-	
-	public boolean add(int index, Token obj) 
-	{
-		
-		// if the index outside the list bound and 
-		// token is null, returns false.
-		if(obj == null || 
-		   index > this.size()) 
-		{			
+	// add a token object to a specific position of the
+	// doubly-link list.
+	public boolean add(int index, Token obj) {
+
+		// condition 1: if the index exceeds the size of the
+		// doubly-link list or the index is less than 0,
+		// it returns false.
+		if (index > this.size() || index < 0 || obj == null) {
+
 			return false;
 		}
-				
-		// create a new node object
-		Node newNode = new Node (null, null, obj);
-				
-		// if index not equals to 0
-		// this newly added node is place between 2 nodes.
-		if(index != 0) 
-		{		
-			Node temp = this.getNode(index);
-				
-			temp.prev.next = newNode;
-				
-			newNode.prev = temp.prev;
-						
-			newNode.next = temp;
-				
-			temp.prev = newNode;					
+
+		// create a Node object.
+		Node newNode = new Node(null, null, obj);
+
+		if (this.size() == 0) {
+
+			this.head = newNode;
+			this.tail = newNode;
+
 		}
 		
-		// place at the beginning of the list.
-		else 
-		{												
+
+		// condition 2: the new Node to be inserted is the
+		// first node of the doubly-link list.
+		if (index == 0) {
+
+			newNode.next = this.head;
+
 			this.head.prev = newNode;
-						
-			newNode.next = this.head;								
+
+			this.head = newNode;
+
+			return true;
+
 		}
-						
+		
+
+		// condition 3: add to the end of the list
+		else if (index == this.size()) {
+			
+			return this.add(obj);
+
+		}
+		
+
+		// condition 4: the new Node to be inserted is at
+		// middle of the doubly-link list.
+
+		// get the node position where you want to insert into it.
+		Node temp = this.getNode(index);
+
+		// create 2 variables pointing to the previous and next nodes.
+		Node tempPrevious = temp.prev;
+
+		// update the pointer of these 3 Nodes.
+		tempPrevious.next = newNode;
+
+		newNode.prev = tempPrevious;
+
+		newNode.next = temp;
+		
+		temp.prev = newNode;
+
 		return true;
 	}
 
+	// test whether a given object is contained in the list.
 	public boolean contains(Token obj) {
+
+		// point the temp as the first Node in the list.
+		Node temp = this.head;
+
+		// loop through the Nodes
+		while (temp != null) {
+
+			// if it finds an equal object, returns true.
+			// True-this token object exist.
+			if (temp.getToken().equals(obj)) {
+
+				return true;
+			}
+
+			// update the temp pointer
+			temp = temp.next;
+		}
+
+		// if no object to be found, returns false.
 		return false;
 	}
 
 	public boolean remove(Token obj) {
+
+		boolean containResutl = this.contains(obj);
+
+		if (containResutl == false) {
+
+			return containResutl;
+		}
+
+		// find the position of the token object in the list
+		int indexPosition = this.indexOf(obj);
+		
+		// remove from the list and return true.
+		this.remove(indexPosition);
+
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 0;
@@ -224,7 +369,8 @@ public class DSList implements List {
 
 	@Override
 	public boolean equals(Object other) {
+
 		return true;
 	}
-	
+
 }

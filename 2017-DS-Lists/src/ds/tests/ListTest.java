@@ -188,8 +188,7 @@ public class ListTest extends DSUnitTesting {
 		String s = l.toString();
 		assertTrue("List didn't insert the specified token. " 
 				+ "List.add(Token), or List.toString() is broken.", 
-				"0.0".equals(s));
-		
+				"0.0".equals(s));		
 		assertEquals(l.head, new Node(null, null, new Token(0)));
 		
 		// Add a second time: adding to an empty list is different than adding to a non-empty list. 
@@ -197,7 +196,6 @@ public class ListTest extends DSUnitTesting {
 		s = l.toString();
 		assertTrue("List didn't insert the specified token. List.add(Token), or List.toString() is broken.", 
 				"0.0 1.0".equals(s));
-
 	}
 	
 	/**
@@ -232,10 +230,7 @@ public class ListTest extends DSUnitTesting {
 		Marks.getInstance().marks.put(ID+"Get", 3f);
 
 		l = new DSList(chain3);
-		int s = l.size();
-		
-		System.out.println(s); //   only 3 nodes available.
-		
+		int s = l.size();						
 		assertEquals("List.size() should be working for this test", 3, s);
 		
 		// remember 0 indexing. 
