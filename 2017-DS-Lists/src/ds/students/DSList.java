@@ -243,7 +243,6 @@ public class DSList implements List {
 
 		// Condition 2: Adding a Node to the end of the
 		// pre-existing doubly link-list.
-
 		this.tail.next = newTailingnode;
 
 		newTailingnode.prev = this.tail;
@@ -298,7 +297,6 @@ public class DSList implements List {
 
 		}
 		
-
 		// condition 4: the new Node to be inserted is at
 		// middle of the doubly-link list.
 
@@ -310,11 +308,15 @@ public class DSList implements List {
 
 		// update the pointer of these 3 Nodes.
 		tempPrevious.next = newNode;
-
+		
+		// the new node previous pointer
 		newNode.prev = tempPrevious;
-
+		
+		// the new node next pointer
 		newNode.next = temp;
 		
+		// the temp node previous pointer point to the 
+		// new node.
 		temp.prev = newNode;
 
 		return true;
