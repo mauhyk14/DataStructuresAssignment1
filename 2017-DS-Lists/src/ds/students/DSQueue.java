@@ -29,6 +29,7 @@ public class DSQueue extends Queue {
 	}
 
 	@Override
+	// Remove the head token 
 	public Token poll() {
 		return this.list.remove(0);
 	}
