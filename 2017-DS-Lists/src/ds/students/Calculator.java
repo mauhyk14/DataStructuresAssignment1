@@ -120,6 +120,86 @@ public class Calculator {
 	
 	public double evaluatePostfix(DSQueue exp)
 	{
+		double result = 0;
+		
+		// create an empty stack
+		DSStack holdNodes = new DSStack();
+		
+		// access the first node in the queue.
+		Node temp = exp.list.head;
+		
+		// while there are more nodes to look through
+		while(temp != null) {
+			
+			// if the token is an operand(numbers), it will push 
+			// to the holdNodes stack.
+			if(temp.getToken().type == Type.OPERAND) {
+				
+				holdNodes.push(temp.getToken());
+				
+			}
+			
+			
+			// if the token is an operator
+			else if(temp.getToken().type == Type.OPERATOR) {
+				
+				// pop a top element to a variable, then pop
+				// another one to another variable.
+				double E2 = holdNodes.pop().getOperand();
+				
+				double E1 = holdNodes.pop().getOperand();
+				
+				// based on the operator, we calculate 
+				// the value.
+				switch(temp.getToken().getOperator()) {
+				
+				case "+":
+					result = E1 + E2;
+					break;
+				
+				case "-":
+					result = E1 - E2;
+					break;
+					
+				case "*":
+					result = E1 * E2;
+					break;
+					
+				case "/":
+					result = E1 / E2;
+					break;
+																
+				}
+				
+				// turn the resulting value into a token				
+				Token resultToken = new Token(result);
+				
+				// push onto a stack
+				holdNodes.push(resultToken);
+				
+				
+			}
+			
+											
+			// it updates the temp node variable.
+			temp = temp.next;
+			
+		}
+		
+		
+		// after looping through all the nodes in the queue,
+		// return the last number as the final result.
+		if(holdNodes.size() == 1) {
+			
+			double returnResult = holdNodes.pop().getOperand();
+			
+			return returnResult;
+					
+		}
+		
+		
 		return 0;
+							
 	}
+	
 }
